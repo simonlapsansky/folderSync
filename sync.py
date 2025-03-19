@@ -219,9 +219,11 @@ def main():
         while True:
             # Check if there are any events logged in the source log file
             if os.path.getsize('sourceLog.log') > 0:
+                print("Synchronizing from log...")
                 main_logger.info("Synchronizing from log...")
                 sync_from_log(args.source, args.replica, source_log_file, main_logger)
             else:
+                print("Synchronizing from source...")
                 main_logger.info("Synchronizing from source...")
                 sync_folders(args.source, args.replica, args.log_file, main_logger)
             time.sleep(args.interval)
