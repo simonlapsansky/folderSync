@@ -1,6 +1,6 @@
 # One-Way Folder Synchronization Script
 
-This script synchronizes files and directories from a source folder to a replica folder. It uses the `watchdog` library to monitor file system events and logs these events to a log file. The script can handle file creation, modification, deletion, and movement.
+This script synchronizes files and directories from a source folder to a replica folder. It uses the `watchdog` library to monitor file system events and logs these events to a log file. The script can handle file creation, modification, deletion, and movement. Implemented and tested on Windows
 
 ## Features
 
@@ -13,6 +13,7 @@ This script synchronizes files and directories from a source folder to a replica
 
 ## Requirements
 
+- Windows
 - Python 3.x
 - `watchdog` library
 
