@@ -9,10 +9,12 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import re
 
+
 def remove_readonly(func, path, _):
     "Clear the readonly bit and reattempt the removal upon failure due to permissions"
     os.chmod(path, stat.S_IWRITE)
     func(path)
+
 
 def convert_interval(interval, unit):
     """Convert the interval to seconds based on the unit."""
@@ -25,6 +27,7 @@ def convert_interval(interval, unit):
     else:
         raise ValueError("Invalid time unit. "
                          "Use 'seconds', 'minutes', or 'hours'.")
+
 
 class SyncEventHandler(FileSystemEventHandler):
     """Event handler for file system changes."""
@@ -59,6 +62,7 @@ class SyncEventHandler(FileSystemEventHandler):
         """Handle modified file system event."""
         self.log_event(event)
 
+
 def calculate_md5(file_path, main_logger):
     """Calculate the MD5 hash of a file."""
     hash_md5 = hashlib.md5()
@@ -70,6 +74,7 @@ def calculate_md5(file_path, main_logger):
     except Exception as e:
         main_logger.error(f"Error calculating MD5 for {file_path}: {e}")
         return None
+
 
 def sync_folders(src, dest, log_file, main_logger):
     """Synchronize files and directories from source to destination."""
@@ -110,6 +115,7 @@ def sync_folders(src, dest, log_file, main_logger):
         except Exception as e:
             main_logger.error(f"Error removing {dest_item_path}: {e}")
 
+
 def parse_event_log(log_file, main_logger):
     """Parse the event log and return a list of events."""
     events = []
@@ -125,6 +131,7 @@ def parse_event_log(log_file, main_logger):
     except Exception as e:
         main_logger.error(f"Error reading log file {log_file}: {e}")
     return events
+
 
 def handle_event(event, src, dest, main_logger):
     """Handle a single event by performing the corresponding file operation."""
@@ -159,6 +166,7 @@ def handle_event(event, src, dest, main_logger):
     except Exception as e:
         main_logger.error(f"Error handling event {event}: {e}")
 
+
 def sync_from_log(src, dest, source_log_file, main_logger):
     """Synchronize files and directories based on the event log."""
     events = parse_event_log(source_log_file, main_logger)
@@ -168,6 +176,7 @@ def sync_from_log(src, dest, source_log_file, main_logger):
     # Clear the source log file after synchronization
     with open('sourceLog.log', "w") as f:
         f.truncate()
+
 
 def main():
     parser = argparse.ArgumentParser(description="One-way folder synchronization script.")
@@ -219,6 +228,7 @@ def main():
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
+
 
 if __name__ == "__main__":
     main()
