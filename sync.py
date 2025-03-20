@@ -188,7 +188,7 @@ def main():
                         help="Time unit for the interval (default: seconds)")
     args = parser.parse_args()
 
-    # Convert the interval to seconds
+    # Convert the interval to correct time unit
     args.interval = convert_interval(args.interval, args.unit)
 
     # Create a logger for the main log file
